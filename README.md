@@ -16,7 +16,7 @@ This repository contains all the resources needed for the CPEN322 assignments an
 
 ## Q & A
 
-If you have any questions regarding the assignments, please [post them on Piazza](https://piazza.com/class/kszjgsicx1m5np). Unless your question contains personal information, it will be made public for the benefit of your classmates. For each assignment, we will have 2 TAs serving as main points of contact, from whom you can expect to receive an answer (other TAs can chime in too, of course).
+If you have any questions regarding the assignments, please [post them on Piazza](https://piazza.com/class/kszjgsicx1m5np). Unless your question contains personal information, it will be made public for the benefit of your classmates. For each assignment, we will have 2 TAs serving as main points of contact, from whom you can expect to receive an answer (other TAs can chime in too, of course). Note that we will not answer any assignment-related questions 48 hours before the deadline.
 
 * Assignment 1 (Sep 27 ~ Oct 10) - TBA
 * Assignment 2 (Oct 11 ~ Oct 24) - TBA
