@@ -7,7 +7,7 @@ Before you begin the course project, there are a few tasks you need to complete.
 1. [(Required) Provide your Github username on Canvas](#submitting-github-username)
 2. [(Required) Install Git Client if you don't have it already](#install-git-client)
 3. [(Required) Install Node.js if you don't have it already](#install-nodejs)
-4. [(Required from Assignment 4) Install MongoDB if you don't havve it already](#install-mongodb)
+4. [(Required from Assignment 4) Install MongoDB if you don't have it already](#install-mongodb)
 
 ## Submitting Github Username
 
@@ -22,7 +22,11 @@ As mentioned, since we use Github to manage code, you will need Git Client on yo
 
 Although there won't be JavaScript in the next assignment, you will use NodeJS to start a local web server and serve your client-side application. Hence, *you must complete this task* before you can start working on your course project. In addition, NodeJS is very useful for quickly testing your JavaScript code during class activities.
 
+You can find the setup instructions [here](https://github.com/nodesource/distributions/blob/master/README.md).
+
 
 ## Install MongoDB
 
 This is not required in the next assignment, but you will be using MongoDB later in the course (from Assignment 4 onwards). Feel free to skip this task for now if you prefer to install it later.
+
+You can find the setup instructions [here](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu/#install-mongodb-community-edition).
