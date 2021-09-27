@@ -8,7 +8,7 @@ This repository contains all the resources needed for the CPEN322 assignments an
 * [Assignment Submission Instructions](assignments/canvas-submission.md)
 * [Assignment 0 - Installing required software](assignments/assignment-0.md)
 * [Assignments](assignments)
-    1. Assignment 1 - released on Sep 27, due Oct 10
+    1. [Assignment 1](assignments/assignment-1.md) - released on Sep 27, due Oct 10
     2. Assignment 2 - released on Oct 11, due Oct 24
     3. Assignment 3 - released on Oct 25, due Nov 7
     4. Assignment 4 - released on Nov 8, due Nov 21
