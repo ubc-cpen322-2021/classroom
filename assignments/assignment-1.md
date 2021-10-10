@@ -164,15 +164,41 @@ There are 6 tasks for this assignment (Total 35 Points):
 * Task 6: 1 Point
 
 
-## Submission instructions:
+## Submission instructions
 
 Copy the **commit hash** from Github and enter it in Canvas.
 
 For step-by-step instructions, refer to [the tutorial](canvas-submission.md).
 
 
-### Deadline:
+### Deadline
 
 These deadlines will be strictly enforced by the assignment submission system (Canvas).
 
 * Sunday, Oct 10, 2021 23:59:59 PST
+
+
+### Frequently Asked Questions
+
+* *Can we customize the look of the user interface?*
+
+Yes, you are free to style your app however you want as long as it conforms to the specifications in the instructions above -- i.e., passes the given tests.
+
+* *Is passing all the tests enough to get the points?*
+
+Yes, the tests should give you a good idea of the points you will receive.
+However, passing the tests doesn't *guarantee* the marks, as we will look for cases of plagiarism or test-hijacking - there will be human intervention before the final marks are determined.
+
+* *Can we use `nodemon`?*
+
+Yes. Make sure to install it with the flag `--no-save` or `--save-dev`.
+
+* *Can we organize the CSS rules in multiple stylesheets?*
+
+No. The test script looks for the `<link>` element with the `src` set to `style.css`. If it fails to find this element, it stops running the rest of the test cases.
+
+While this is not one of the graded tasks, if we have to step in to make some basic checks pass, we will be deducting marks. This is just a logistical constraint. (This is why we asked to maintain the directory structure)
+
+* *Should we include the test script when we submit?*
+
+Yes. You won't lose marks for not including it, but including it makes it easy for the TAs to inspect your application.
