@@ -76,7 +76,7 @@ var messageBox = createDOM(
 3. (4 Points) [JS] In Task 2, you have generated each page programmatically. However, the generated DOM has no relation to the application state, and is recreated every time the URL changes. In this task, we will create objects to represent each page, and each object will hold the relevant data and handle the events within the page. This software design pattern is called ["Model-View-Control"](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller).
     * A) Define a class named `LobbyView`. Inside the constructor, create the DOM for the "lobby page" (which you have generated in Task 2) and then assign it to the `elem` property.
     * B) Define a class named `ChatView`. Inside the constructor, create the DOM for the "chat page" (which you have generated in Task 2) and then assign it to the `elem` property.
-    * C) Define a class named `ProfileView`. Inside the constructor, create the DOM for the "chat page" (which you have generated in Task 2) and then assign it to the `elem` property.
+    * C) Define a class named `ProfileView`. Inside the constructor, create the DOM for the "profile page" (which you have generated in Task 2) and then assign it to the `elem` property.
     * D) Inside the `main` function, instantiate the view objects using the classes you have just defined in Tasks 3.A, 3.B, and 3.C. Use the variable names `lobbyView`, `chatView`, and `profileView`.
     * E) Update the `renderRoute` function to use the newly instantiated objects instead (hint: you should reuse the DOM attached to the `elem` property of each object).
 
