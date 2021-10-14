@@ -197,4 +197,4 @@ For step-by-step instructions, refer to [the tutorial](canvas-submission.md).
 
 These deadlines will be strictly enforced by the assignment submission system (Canvas).
 
-* Sunday, Oct 24, 2021 23:59:59 PST
+* Sunday, Oct 24, 2021 23:59:59 PDT

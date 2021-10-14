@@ -175,7 +175,7 @@ For step-by-step instructions, refer to [the tutorial](canvas-submission.md).
 
 These deadlines will be strictly enforced by the assignment submission system (Canvas).
 
-* Sunday, Oct 10, 2021 23:59:59 PST
+* Sunday, Oct 10, 2021 23:59:59 PDT
 
 
 ### Frequently Asked Questions
