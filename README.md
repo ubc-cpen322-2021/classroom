@@ -10,7 +10,7 @@ This repository contains all the resources needed for the CPEN322 assignments an
 * [Assignments](assignments)
     1. [Assignment 1](assignments/assignment-1.md) - released on Sep 27, due Oct 10
     2. [Assignment 2](assignments/assignment-2.md) - released on Oct 11, due Oct 24
-    3. Assignment 3 - released on Oct 25, due Nov 7
+    3. [Assignment 3](assignments/assignment-3.md) - released on Oct 25, due Nov 7
     4. Assignment 4 - released on Nov 8, due Nov 21
     5. Assignment 5 - released on Nov 22, due Dec 5
 
