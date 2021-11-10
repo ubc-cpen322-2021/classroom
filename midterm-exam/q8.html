@@ -1,0 +1,411 @@
+<!-- Enter your HTML code here -->
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>DOM Traversal</title>
+		<script src="q8-solution.js" type="text/javascript"></script>
+<style>
+#top-menu {
+	padding: 0.5rem;
+	border-bottom: 1px solid #aaa;
+	font-family: Helvetica, sans-serif;
+}
+#top-menu > button {
+	padding: 0.5rem;
+	margin-right: 1rem;
+	color: white;
+	font-weight: 600;
+	font-family: Helvetica, sans-serif;
+	font-size: 1rem;
+	background: rgb(110,110,220);
+	border: 1px solid rgb(40,40,200);
+	box-shadow: 0 0 0.5rem rgba(0,0,0,0.3);
+}
+
+#testarea {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.test-box {
+	margin: 0.5rem;
+	padding: 0.5rem;
+	border-bottom: 1px solid #ccc;
+	width: 30%;
+}
+.test-control h4 {
+	font-family: Helvetica, sans-serif;
+	display: inline-block;
+	margin-right: 1rem;
+}
+.test-control button {
+	padding: 0.4rem;
+	color: white;
+	font-weight: 600;
+	font-family: Helvetica, sans-serif;
+	font-size: 0.9rem;
+	background: rgb(110,110,220);
+	border: 1px solid rgb(40,40,200);
+	box-shadow: 0 0 0.5rem rgba(0,0,0,0.3);
+}
+.test-control span {
+	font-family: Helvetica, sans-serif;
+}
+.test-container div, 
+.test-container span, 
+.test-container p {
+	padding: 0.5rem;
+	border: 1px dashed #ccc;
+	background: white;
+}
+.test-container span {
+	display: inline-block;
+}
+
+.test-container .changed,
+.test-container.changed {
+	background: rgb(40,180,40);
+}
+
+.test-container .skip,
+.test-container.skip {
+	background: rgb(180,180,180);
+}
+
+#console {
+	padding: 1em;
+	border: 1px solid #ddd;
+	max-height: 4em;
+	overflow-y: scroll;
+	white-space: pre-wrap;
+}
+</style>
+<script>
+window.addEventListener('load', function(){
+	const resetBtn = document.querySelector('#btn-reset');
+	const runBtn = document.querySelector('#btn-run-all');
+
+	const consoleDiv = document.querySelector('#console');
+	const consoleLog = (text) => {
+		let div = document.createElement('div');
+		div.textContent = String(text);
+		consoleDiv.appendChild(div);
+	}
+
+	const uid = () => Math.floor(Math.random() * Number.MAX_SAFE_INTEGER);
+	const valueMap = {};
+	const hasChanged = node => {
+		if (!node || node.nodeType !== 3) return false;
+		let value = node.nodeValue.trim();
+		if (!node.uid){
+			node.uid = uid();
+			valueMap[node.uid] = value;
+		}
+		let changed = valueMap[node.uid] !== value;
+		valueMap[node.uid] = value;
+		return changed;
+	};
+	const setup = node => { hasChanged(node); node.childNodes.forEach(setup); return node; }
+
+	const tests = {
+		'1': {
+			html: `The only text node`,
+			change: node => {
+				node.nodeValue = 'Changed text';
+			},
+			expected: 1
+		},
+		'2': {
+			html: `<div>
+				Text inside a div
+
+				<div>No change</div>
+			</div>`,
+			change: node => {
+				node.firstChild.nodeValue = 'Changed text';
+			},
+			expected: 1
+		},
+		'3': {
+			html: `<div>
+				No change
+				<div>
+				No change
+					<div id="change-1">
+						Deeply nested text
+					</div>
+				</div>
+			</div>`,
+			change: node => {
+				node.querySelector('#change-1').firstChild.nodeValue = 'Changed text';
+			},
+			expected: 1
+		},
+		'4': {
+			html: `<div>
+				No change
+				<span>
+				Text inside a span;
+				</span>
+				<p>
+				Text inside a p;
+				</p>
+				No change
+			</div>`,
+			expected: 2,
+			change: node => {
+				node.querySelector('span').firstChild.nodeValue = 'Changed text';
+				node.querySelector('p').firstChild.nodeValue = 'Changed text';
+			}
+		},
+		'5': {
+			html: `<div>
+				No change
+				<div>
+				No change
+					<div id="change-1">
+						Deeply nested text
+					</div>
+				</div>
+				Text in between divs
+				<div>
+				No change
+				</div>
+				Text as the last child
+			</div>`,
+			expected: 3,
+			change: node => {
+				node.querySelector('#change-1').firstChild.nodeValue = 'Changed text';
+				node.childNodes[2].nodeValue = 'Changed text';
+				node.childNodes[4].nodeValue = 'Changed text';
+			}
+		},
+		'6': {
+			html: `<div>
+				Text as the first child
+				<div>
+				No change
+					<div id="change-1">
+						Deeply nested text
+						<div>
+							No change
+							<div><span id="change-2">Deeply nested span</span>
+							No change
+							<span id="change-3">Deeply nested span</span>
+							</div>
+						</div>
+						Deeply nested text
+					</div>
+				</div>
+				Text as the last child
+			</div>`,
+			expected: 6,
+			change: node => {
+				node.childNodes[0].nodeValue = 'Changed text';
+				node.childNodes[2].nodeValue = 'Changed text';
+				let change1 = node.querySelector('#change-1');
+				change1.firstChild.nodeValue = 'Changed text';
+				change1.childNodes[2].nodeValue = 'Changed text';
+				node.querySelector('#change-2').firstChild.nodeValue = 'Changed text';
+				node.querySelector('#change-3').firstChild.nodeValue = 'Changed text';
+			}
+		},
+		'7': {
+			html: `<div>
+				Text as the first child
+				<div class="skip">
+				No change
+					<div id="change-1">
+						Deeply nested text
+					</div>
+				</div>
+				Text in between divs
+				<div>
+				No change
+					<div id="change-2">
+						Deeply nested text
+					</div>
+				</div>
+				Text as the last child
+			</div>`,
+			expected: 4,
+			change: node => {
+				node.childNodes[0].nodeValue = 'Changed text';
+				node.childNodes[2].nodeValue = 'Changed text';
+				node.childNodes[4].nodeValue = 'Changed text';
+				node.querySelector('#change-1').firstChild.nodeValue = 'Changed text';
+				node.querySelector('#change-2').firstChild.nodeValue = 'Changed text';
+			}
+		},
+		'8': {
+			html: `<div>
+				Text as the first child
+				<div>
+				No change
+					<div>
+						No change
+						<div class="skip">
+							No change
+							<div id="change-1"><span id="change-1-1">Deeply nested span</span>
+							Text in between spans
+							<span id="change-1-2">Deeply nested span</span>
+							</div>
+						</div>
+						<div>
+							No change
+							<div id="change-2"><span id="change-2-1">Deeply nested span</span>
+							Text in between spans
+							<span id="change-2-2">Deeply nested span</span>
+							</div>
+						</div>
+						<div class="skip">
+							No change
+							<div id="change-3"><span id="change-3-1">Deeply nested span</span>
+							Text in between spans
+							<span id="change-3-2">Deeply nested span</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				Text as the last child
+			</div>`,
+			expected: 5,
+			change: node => {
+				node.childNodes[0].nodeValue = 'Changed text';
+				node.childNodes[2].nodeValue = 'Changed text';
+				node.querySelector('#change-1').childNodes[1].nodeValue = 'Changed text';
+				node.querySelector('#change-2').childNodes[1].nodeValue = 'Changed text';
+				node.querySelector('#change-3').childNodes[1].nodeValue = 'Changed text';
+				node.querySelector('#change-1-1').firstChild.nodeValue = 'Changed text';
+				node.querySelector('#change-1-2').firstChild.nodeValue = 'Changed text';
+				node.querySelector('#change-2-1').firstChild.nodeValue = 'Changed text';
+				node.querySelector('#change-2-2').firstChild.nodeValue = 'Changed text';
+				node.querySelector('#change-3-1').firstChild.nodeValue = 'Changed text';
+				node.querySelector('#change-3-2').firstChild.nodeValue = 'Changed text';
+			}
+		},
+		'9': {
+			html: `<div>
+				No change
+				<div>
+				No change
+					<div>
+						No change
+						<div class="skip">
+							No change
+							<div id="change-1"><span id="change-1-1">Deeply nested span</span>
+							Text in between spans
+							<span id="change-1-2">Deeply nested span</span>
+							</div>
+						</div>
+						<div>
+							No change
+							<div id="change-2"><span id="change-2-1">Deeply nested span</span>
+							Text in between spans
+							<span id="change-2-2">Deeply nested span</span>
+							</div>
+						</div>
+					</div>
+					<div class="skip">
+						No change
+						<div id="change-3"><span id="change-3-1">Deeply nested span</span>
+						Text in between spans
+						<span id="change-3-2">Deeply nested span</span>
+						</div>
+					</div>
+				</div>
+				Text as the last child
+			</div>`,
+			expected: 4,
+			change: node => {
+				node.childNodes[2].nodeValue = 'Changed text';
+				node.querySelector('#change-1').childNodes[1].nodeValue = 'Changed text';
+				node.querySelector('#change-2').childNodes[1].nodeValue = 'Changed text';
+				node.querySelector('#change-3').childNodes[1].nodeValue = 'Changed text';
+				node.querySelector('#change-1-1').firstChild.nodeValue = 'Changed text';
+				node.querySelector('#change-1-2').firstChild.nodeValue = 'Changed text';
+				node.querySelector('#change-2-1').firstChild.nodeValue = 'Changed text';
+				node.querySelector('#change-2-2').firstChild.nodeValue = 'Changed text';
+				node.querySelector('#change-3-1').firstChild.nodeValue = 'Changed text';
+				node.querySelector('#change-3-2').firstChild.nodeValue = 'Changed text';
+			}
+		}
+	}
+
+	const reset = () => {
+		let testarea = document.querySelector('#testarea');
+		testarea.innerHTML = Object.keys(tests).map(key => `<div class="test-box">
+			<div class="test-control">
+				<h4>Test ${key}</h4>
+				<button id="btn-run-${key}">Run Test ${key}</button>
+				<button id="btn-reset-${key}">Reset</button>
+				<span id="result-${key}"></span>
+			</div>
+			<div id="test-${key}" class="test-container">${tests[key].html}</div>
+		</div>`).join('\n');
+
+		const runTest = i => {
+			try {
+				let node = testarea.querySelector('#test-' + i).firstChild;
+
+				tests[i].change(node);
+
+				let changed = watchTextChange(node, hasChanged);
+
+				testarea.querySelector('#result-' + i).textContent = tests[i].expected === changed ? 'Count OK' : `Count Error`;
+
+				return changed === tests[i].expected;
+			}
+			catch (err){
+				consoleLog(err.stack);
+				
+				testarea.querySelector('#result-' + i).textContent = `Runtime Error`;
+
+				return false;
+			}
+		}
+
+		const runAll = () => {
+			let countOK = true;
+			for (let i = 1; i <= 9; i ++) countOK = runTest(i) && countOK;
+
+			document.querySelector('#top-menu>span').textContent = countOK ? 'Count OK in all' : 'Count Error'
+		}
+
+		for (let i = 1; i <= 9; i ++){
+			let area = setup(testarea.querySelector('#test-' + i));
+			testarea.querySelector('#btn-run-' + i).addEventListener('click', evt => runTest(i));
+			testarea.querySelector('#btn-reset-' + i).addEventListener('click', evt => {
+				area.classList.remove('changed');
+				area.innerHTML = tests[i].html;
+				setup(area);
+				testarea.querySelector('#result-' + i).textContent = '';
+			});
+		}
+
+		runBtn.removeEventListener('click', runBtn.clickListener);
+		runBtn.addEventListener('click', runAll);
+		runBtn.clickListener = runAll;
+
+		document.querySelector('#top-menu>span').textContent = '';
+	};
+
+	resetBtn.addEventListener('click', reset);
+
+	reset();
+
+});
+
+</script>
+	</head>
+	<body>
+		<div id="top-menu">
+			<button id="btn-run-all">Run Tests</button>
+			<button id="btn-reset">Reset</button>
+			<span></span>
+			<div id="console"></div>
+		</div>
+		<div id="testarea"></div>
+	</body>
+</html>
