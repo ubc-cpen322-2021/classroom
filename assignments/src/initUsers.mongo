@@ -1,0 +1,15 @@
+conn = new Mongo();
+db = conn.getDB("cpen322-messenger");
+
+result = db.users.insert([
+	{
+		username: 'alice',
+		password: '1htYvJoddV8mLxq3h7C26/RH2NPMeTDxHIxWn49M/G0wxqh/7Y3cM+kB1Wdjr4I='
+	},
+	{
+		username: 'bob',
+		password: 'MIYB5u3dFYipaBtCYd9fyhhanQkuW4RkoRTUDLYtwd/IjQvYBgMHL+eoZi3Rzhw='
+	}
+]);
+
+print(result);
