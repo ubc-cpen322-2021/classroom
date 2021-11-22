@@ -10,4 +10,4 @@ For submitting each assignment, refer to the [submission instructions](canvas-su
 2. [Assignment 2](assignment-2.md) - released on Oct 11, due Oct 24
 3. [Assignment 3](assignment-3.md) - released on Oct 25, due Nov 7
 4. [Assignment 4](assignment-4.md) - released on Nov 8, due Nov 21
-5. Assignment 5 - released on Nov 22, due Dec 5
+5. [Assignment 5](assignment-5.md) - released on Nov 22, due Dec 5
